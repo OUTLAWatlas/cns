@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code and Seek - Round 5 Input</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem;
+            background-color: rgba(0, 20, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .input-block {
+            background-color: #111;
+            border: 1px solid #00ff00;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+        .back-btn {
+            background-color: #00aa00;
+            color: black;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background-color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ROUND 5: INPUT DATA</h1>
+        <p>Use the following input to solve the challenge:</p>
+        
+        <div class="input-block" id="input-block">
+            <!-- Example input data -->
+            123 456 789 101 112 131 415
+            161 718 192 021 222 324 252
+        </div>
+        
+        <button class="back-btn" id="back-btn">GO BACK</button>
+    </div>
+
+    <script>
+        document.getElementById('back-btn').addEventListener('click', function() {
+            window.location.href = 'round5.html'; // Navigate back to Round 4 page
+        });
+    </script>
+</body>
+</html>

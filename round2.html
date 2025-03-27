@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code and Seek - Round 2: Code Debugging</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            height: 100%;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+            padding: 2rem 0;
+        }
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            padding: 2rem;
+            background-color: rgba(0, 20, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .code-block {
+            background-color: #111;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .instructions {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .copy-btn {
+            background-color: #00aa00;
+            color: black;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #00ff00;
+        }
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .popup-content {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #00ff00;
+        }
+        .popup-input {
+            width: 100%;
+            padding: 0.7rem;
+            margin-top: .1rem;
+            background-color: #1a1a1a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+        }
+        .submit-btn {
+            background-color: #00aa00;
+            color: black;
+            border: none;
+            padding: 0.7rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #00ff00;
+        }
+        .background-matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-canvas" class="background-matrix"></canvas>
+    <div class="container">
+        <h1>ROUND 2: CODE DEBUGGING</h1>
+        <div class="instructions">
+            <p>Mission: Debug this Python script. The code contains several intentional errors that prevent it from running correctly.</p>
+            <p>Your tasks:</p>
+            <ol>
+                <li>Identify and fix all the bugs in the code</li>
+                <li>Run the corrected code in VS Code</li>
+                <li>Submit the output you receive</li>
+            </ol>
+        </div>
+        <div class="code-block" id="code-block">def analyza_data(data)
+    total = 0
+    valid_entries = []
+    for entry in data
+        try:
+            value = int(entry)
+            if value > 0:
+                total += value
+                valid_entries.append(value)
+        except ValueError
+            pass
+    
+    avg = total / len(valid_entries)
+    return {
+        "total": total,
+        "average": round(avg, 2)
+        "valid_entries": valid_entries
+    }
+
+# Example data set
+sample_data = ["10", "20", "abc", "-5", "30", "40"]
+result = analyza_data(sample_data)
+print(result)</div>
+        <button class="copy-btn" id="copy-btn">COPY CODE</button>
+    </div>
+
+    <!-- Answer Popup -->
+    <div class="popup-overlay" id="answer-popup">
+        <div class="popup-content">
+            <span class="close-popup" id="close-answer">&times;</span>
+            <h2>VERIFICATION REQUIRED</h2>
+            <p>Enter the exact output from running the debugged code:</p>
+            <input type="text" id="puzzle-answer" class="popup-input" placeholder="Enter the output">
+            <button id="submit-answer" class="submit-btn">SUBMIT</button>
+        </div>
+    </div>
+
+    <script>
+        // Matrix background effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>?/{}[]+=-_)(*&^%$#@!~';
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 33);
+
+        // Popup and answer submission logic
+        const copyBtn = document.getElementById('copy-btn');
+        const answerPopup = document.getElementById('answer-popup');
+        const closeAnswerBtn = document.getElementById('close-answer');
+        const submitAnswerBtn = document.getElementById('submit-answer');
+        const puzzleAnswer = document.getElementById('puzzle-answer');
+
+        // Show popup when copy button is clicked
+        copyBtn.addEventListener('click', function() {
+            // Copy code to clipboard
+            navigator.clipboard.writeText(document.getElementById('code-block').textContent).then(function() {
+                alert('Code copied to clipboard. Open in VS Code and debug!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+
+            // Show answer popup
+            answerPopup.style.display = 'flex';
+        });
+
+        // Close popup
+        closeAnswerBtn.addEventListener('click', function() {
+            answerPopup.style.display = 'none';
+        });
+
+        // Submit answer
+        submitAnswerBtn.addEventListener('click', function() {
+            const answer = puzzleAnswer.value.trim();
+            
+            // Correct answer
+            const correctAnswer = '{"total": 100, "average": 25.0, "valid_entries": [10, 20, 30, 40]}';
+            
+            if (answer.toLowerCase() === correctAnswer.toLowerCase()) {
+            } else {
+                alert('Incorrect output. Debug and try again.');
+            }
+        });
+
+        // Allow Enter key to submit
+        puzzleAnswer.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitAnswerBtn.click();
+            }
+        });
+
+        // Resize matrix canvas on window resize
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
