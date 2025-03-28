@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "slot_no": "T01", "mobile_no": "9876543210" },
+    { "slot_no": "T02", "mobile_no": "9123456789" },
+    { "slot_no": "T03", "mobile_no": "9988776655" }
+  ]
+}

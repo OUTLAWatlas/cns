@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code and Seek - Rounds</title>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        background-color: #0a0a0a;
+        color: #00ff00;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+      #timer {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .container {
+        text-align: center;
+        max-width: 800px;
+        padding: 2rem;
+      }
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      }
+      .game-progress {
+        margin-top: 30px;
+        padding: 10px;
+        background-color: rgba(0, 20, 0, 0.3);
+        border-radius: 5px;
+      }
+      .progress-item {
+        text-align: left;
+        margin: 5px 0;
+        padding: 5px;
+        cursor: pointer;
+      }
+      .locked {
+        color: #888;
+        cursor: default;
+      }
+      .current {
+        color: #ffff00;
+      }
+      .completed {
+        color: #00ff00;
+      }
+      .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #0a0a0a;
+        color: #00ff00;
+        padding: 20px;
+        border: 2px solid #00ff00;
+        border-radius: 5px;
+        width: 300px;
+        text-align: center;
+        z-index: 1000;
+      }
+      .popup button {
+        margin-top: 10px;
+        background-color: #00aa00;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        color: black;
+        font-weight: bold;
+      }
+      .close-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #ff0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timer">Time: <span id="time">0</span> sec</div>
+    <div class="container">
+      <h1>CODE N SEEK</h1>
+      <div class="game-progress">
+        <h3>Mission Progress</h3>
+        <div id="progress-container"></div>
+      </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+      <span class="close-btn" onclick="closePopup()">✖</span>
+      <p id="popup-text"></p>
+      <button id="popup-btn" onclick="goToRound()">Start</button>
+      <button onclick="window.location.href='rounds.html'">
+        Return to Home
+      </button>
+    </div>
+
+    <script>
+      let timerStarted = false;
+      let time = 0;
+      let timerInterval;
+      let currentRoundUrl = "";
+
+      window.onload = function () {
+        updateProgress();
+        const startTime = localStorage.getItem("startTime");
+        if (startTime) {
+          timerStarted = true;
+          updateTimer();
+          timerInterval = setInterval(updateTimer, 1000);
+        }
+      };
+
+      function updateTimer() {
+        const startTime = localStorage.getItem("startTime");
+        if (startTime) {
+          time = Math.floor((Date.now() - startTime) / 1000);
+          document.getElementById("time").innerText = time;
+        }
+      }
+
+      function openPopup(round) {
+        currentRoundUrl = `round${round}.html`;
+        document.getElementById(
+          "popup-text"
+        ).innerText = `You are about to start ${getRoundName(
+          round
+        )}. Are you ready?`;
+        document.getElementById("popup").style.display = "block";
+      }
+
+      function closePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+
+      function goToRound() {
+        window.location.href = currentRoundUrl;
+      }
+
+      function getRoundName(round) {
+        const names = {
+          1: "Letter Decryption",
+          2: "Code Debugging",
+          3: "Image Analysis",
+          4: "Advanced Encryption",
+          5: "Advent of Code Challenge",
+        };
+        return names[round] || "Unknown Round";
+      }
+
+      function updateProgress() {
+        let completedRounds =
+          parseInt(localStorage.getItem("completedRounds")) || 0;
+        let progressContainer = document.getElementById("progress-container");
+        progressContainer.innerHTML = "";
+
+        for (let i = 1; i <= 5; i++) {
+          let status = "locked";
+          if (i <= completedRounds) {
+            status = "completed";
+          } else if (i === completedRounds + 1) {
+            status = "current";
+          }
+
+          let progressItem = document.createElement("div");
+          progressItem.classList.add("progress-item", status);
+          progressItem.innerHTML = `Round ${i}: ${getRoundName(
+            i
+          )} <span class="${status}">[${
+            status === "completed"
+              ? "COMPLETED"
+              : status === "current"
+              ? "In Progress"
+              : "Locked"
+          }]</span>`;
+          if (status !== "locked") {
+            progressItem.setAttribute("onclick", `openPopup(${i})`);
+          }
+          progressContainer.appendChild(progressItem);
+        }
+      }
+    </script>
+  </body>
+</html>

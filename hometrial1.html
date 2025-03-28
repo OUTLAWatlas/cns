@@ -1,0 +1,43 @@
+<!-- hometrial.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code and Seek - Press Space to Begin</title>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        background-color: #0a0a0a;
+        color: #00ff00;
+        text-align: center;
+        padding: 2rem;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem;
+        background-color: rgba(0, 20, 0, 0.3);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+      }
+      h1 {
+        font-size: 2rem;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Press SPACE to Begin</h1>
+    </div>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.code === "Space") {
+          localStorage.setItem("startTime", Date.now());
+          window.location.href = "rounds.html";
+        }
+      });
+    </script>
+  </body>
+</html>
