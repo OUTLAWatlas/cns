@@ -74,11 +74,11 @@
         <div class="audio-message">Listen carefully to this audio message:</div>
         <div class="audio-container">
             <audio id="clue-audio" controls>
-                <source src="/api/placeholder/400/300" type="audio/mp3">
+                <source src="audio.mp3" type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>
         </div>
-        <p class="hint-text">Remember the letter you were given. What instrument starts with this letter?</p>
+        <p class="hint-text">Remember the letter you were given. Who comes in your mind first when you hear this. ?</p>
         <div class="input-container">
             <input type="text" id="clue-input" class="input-field" placeholder="Enter your answer">
             <button class="submit-button" onclick="checkAnswer()">Submit</button>
@@ -86,7 +86,7 @@
     </div>
 
     <div id="custom-popup" class="popup">
-        <p>Audio content: "The letter you received is the first letter of a musical instrument that produces sound by striking wooden bars. This instrument is commonly used in orchestras and produces a xylophonic sound."</p>
+        <p>Audio content: "The singer is a very famous personality."</p>
         <button onclick="closePopup()">Close</button>
     </div>
 
@@ -102,7 +102,7 @@
         });
         
         function checkAnswer() {
-            const correctAnswer = "Xylophone";
+            const correctAnswer = "Thala";
             const userAnswer = document.getElementById('clue-input').value.trim();
             
             if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
