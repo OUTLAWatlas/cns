@@ -87,7 +87,7 @@
             const answer = document.getElementById('puzzle-answer').value.trim();
             const correctAnswer = "Knowledge";
 
-            if (answer.replace(/\s+/g, '').toUpperCase() === correctAnswer.replace(/\s+/g, '')) {
+            if (answer === correctAnswer) {
                 alert("Correct! You have successfully solved the Image Decryption challenge.");
                 window.location.href = 'round5.html'; // Redirect to next round
             } else {
