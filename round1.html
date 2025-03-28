@@ -45,10 +45,14 @@
         text-align: center;
         text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
       }
+      .input-container {
+        display: none;
+        text-align: center;
+        margin-top: 1rem;
+      }
       .input-field {
         width: 100%;
         padding: 0.5rem;
-        margin-top: 1rem;
         font-family: "Courier New", monospace;
         font-size: 1rem;
         background-color: #222;
@@ -58,7 +62,6 @@
       }
       .error-message {
         color: red;
-        text-align: center;
         margin-top: 0.5rem;
       }
       .round-button {
@@ -82,9 +85,11 @@
       <div class="popup-content">
         <h2>TRANSMISSION INTERCEPTED</h2>
         <p id="popup-text"></p>
-        <input type="text" id="ip-input" class="input-field" placeholder="Enter decoded IP address" />
-        <p id="error-message" class="error-message"></p>
-        <button class="round-button" onclick="checkIP()">Submit</button>
+        <div class="input-container" id="input-container">
+          <input type="text" id="ip-input" class="input-field" placeholder="Enter decoded IP address" />
+          <p id="error-message" class="error-message"></p>
+          <button class="round-button" onclick="checkIP()">Submit</button>
+        </div>
         <button class="round-button" onclick="location.href='rounds.html'">Return to Home</button>
       </div>
     </div>
@@ -100,6 +105,7 @@
         Good luck.`;
 
       const popupText = document.getElementById("popup-text");
+      const inputContainer = document.getElementById("input-container");
       let index = 0;
 
       function typeEffect() {
@@ -108,6 +114,8 @@
           popupText.innerHTML += char;
           index++;
           setTimeout(typeEffect, 50);
+        } else {
+          inputContainer.style.display = "block";
         }
       }
 
