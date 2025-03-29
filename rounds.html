@@ -149,7 +149,7 @@
       }
 
       function openPopup(round) {
-        currentRoundUrl = `round${round}.html`;
+        currentRoundUrl = round${round}.html;
         document.getElementById(
           "popup-text"
         ).innerText = `You are about to start ${getRoundName(
@@ -169,17 +169,10 @@
       function getRoundName(round) {
         const names = {
           1: "Letter Decryption",
-<<<<<<< HEAD
           2: "Audio-clip Challenge",
           3: "Code Debugger",
           4: "Image Decypher",
           5: "Advent Challenge",
-=======
-          2: "Audio Analysis",
-          3: "Code Debugger",
-          4: "Image Decryption",
-          5: "EndGame",
->>>>>>> 03318cff1087397891dd27686f315dac7b195b09
         };
         return names[round] || "Unknown Round";
       }
@@ -211,7 +204,7 @@
           }]</span>`;
 
           if (status !== "locked") {
-            progressItem.setAttribute("onclick", `openPopup(${i})`);
+            progressItem.setAttribute("onclick", openPopup(${i}));
           }
           progressContainer.appendChild(progressItem);
         }
@@ -235,7 +228,7 @@
           sessionStorage.setItem("finalUsername", username);
 
           // Redirect to youwon.html with parameters
-          window.location.href = `youwon.html?username=${username}&time=${totalTime}`;
+          window.location.href = youwon.html?username=${username}&time=${totalTime};
         }
       }
     </script>
