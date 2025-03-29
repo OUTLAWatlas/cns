@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Code and Seek - Victory</title>
+    <title>Code and Seek - The End?</title>
     <style>
       body {
         font-family: "Courier New", monospace;
@@ -33,21 +33,6 @@
         font-size: 1.2rem;
         margin-bottom: 1.5rem;
       }
-      .return-btn {
-        background-color: #00aa00;
-        color: black;
-        border: none;
-        padding: 0.7rem 1.5rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-family: "Courier New", monospace;
-        border-radius: 5px;
-      }
-      .return-btn:hover {
-        background-color: #00ff00;
-        box-shadow: 0 0 10px #00ff00;
-      }
       #matrix-canvas {
         position: absolute;
         top: 0;
@@ -63,19 +48,10 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div class="container">
-      <h1>VICTORY ACHIEVED</h1>
+      <h1>CONGRATULATIONS, SEEKER</h1>
       <p class="message">
-        You have deciphered the final enigma. The system bows to your intellect.
+        The final cipher dissolves into the void. You have reached the end... or have you?
       </p>
-      <p class="message"><strong>You won the hunt.</strong></p>
-
-      <button class="return-btn" onclick="restartGame()">RESTART</button>
     </div>
-
-    <script>
-      function restartGame() {
-        window.location.href = "index.html"; // Redirect to game start page
-      }
-    </script>
   </body>
 </html>
