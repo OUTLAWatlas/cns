@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code and Seek - Victory</title>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        background-color: #0a0a0a;
+        color: #00ff00;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+      .container {
+        background-color: #111;
+        padding: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        max-width: 400px;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .message {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      .return-btn {
+        background-color: #00aa00;
+        color: black;
+        border: none;
+        padding: 0.7rem 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Courier New", monospace;
+        border-radius: 5px;
+      }
+      .return-btn:hover {
+        background-color: #00ff00;
+        box-shadow: 0 0 10px #00ff00;
+      }
+      #matrix-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.15;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="container">
+      <h1>VICTORY ACHIEVED</h1>
+      <p class="message">
+        You have deciphered the final enigma. The system bows to your intellect.
+      </p>
+      <p class="message"><strong>You won the hunt.</strong></p>
+
+      <button class="return-btn" onclick="restartGame()">RESTART</button>
+    </div>
+
+    <script>
+      function restartGame() {
+        window.location.href = "index.html"; // Redirect to game start page
+      }
+    </script>
+  </body>
+</html>

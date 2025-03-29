@@ -111,41 +111,29 @@
       // Matrix background effect
       const canvas = document.getElementById("matrix-canvas");
       const ctx = canvas.getContext("2d");
-
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-
       const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>?/{}[]+=-_)(*&^%$#@!~";
       const fontSize = 10;
       const columns = canvas.width / fontSize;
-
-      const drops = [];
-      for (let i = 0; i < columns; i++) {
-        drops[i] = 1;
-      }
+      const drops = Array.from({ length: columns }, () => 1);
 
       function drawMatrix() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
         ctx.fillStyle = "#0f0";
         ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
+        drops.forEach((drop, i) => {
           const text = characters.charAt(
             Math.floor(Math.random() * characters.length)
           );
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          ctx.fillText(text, i * fontSize, drop * fontSize);
+          if (drop * fontSize > canvas.height && Math.random() > 0.975)
             drops[i] = 0;
-          }
-
           drops[i]++;
-        }
+        });
       }
-
       setInterval(drawMatrix, 33);
 
       // Login functionality
@@ -155,8 +143,7 @@
           const username = document.getElementById("username").value.trim();
           const password = document.getElementById("password").value.trim();
           const message = document.getElementById("message");
-
-          message.textContent = ""; // Clear previous messages
+          message.textContent = "";
 
           if (!username || !password) {
             message.textContent = "Please enter both Username and Password!";
@@ -167,8 +154,7 @@
           fetch("users.json")
             .then((response) => response.json())
             .then((data) => {
-              const users = data.users;
-              const userFound = users.some(
+              const userFound = data.users.some(
                 (user) =>
                   user.slot_no === username && user.mobile_no === password
               );
@@ -179,8 +165,10 @@
                 localStorage.setItem("codeseek_user", username);
                 localStorage.setItem("codeseek_auth", "true");
                 setTimeout(() => {
-                  window.location.href = "hometrial1.html";
-                }, 1000); // Redirect after 1 second
+                  window.location.href = `hometrial1.html?username=${encodeURIComponent(
+                    username
+                  )}`;
+                }, 1000);
               } else {
                 message.textContent = "Invalid Slot No or Mobile No!";
                 message.className = "error-message";
@@ -193,7 +181,6 @@
             });
         });
 
-      // Also allow Enter key to submit
       document
         .getElementById("password")
         .addEventListener("keypress", function (e) {

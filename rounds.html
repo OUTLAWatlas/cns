@@ -23,6 +23,13 @@
         font-size: 1.5rem;
         font-weight: bold;
       }
+      #username-display {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
       .container {
         text-align: center;
         max-width: 800px;
@@ -44,10 +51,11 @@
         margin: 5px 0;
         padding: 5px;
         cursor: pointer;
+        border-bottom: 1px solid #00ff00;
       }
       .locked {
         color: #888;
-        cursor: default;
+        cursor: not-allowed;
       }
       .current {
         color: #ffff00;
@@ -90,6 +98,7 @@
     </style>
   </head>
   <body>
+    <div id="username-display">User: <span id="username">Guest</span></div>
     <div id="timer">Time: <span id="time">0</span> sec</div>
     <div class="container">
       <h1>CODE N SEEK</h1>
@@ -99,7 +108,6 @@
       </div>
     </div>
 
-    <!-- Popup -->
     <div class="popup" id="popup">
       <span class="close-btn" onclick="closePopup()">✖</span>
       <p id="popup-text"></p>
@@ -110,27 +118,34 @@
     </div>
 
     <script>
-      let timerStarted = false;
-      let time = 0;
       let timerInterval;
       let currentRoundUrl = "";
 
       window.onload = function () {
-        updateProgress();
-        const startTime = localStorage.getItem("startTime");
-        if (startTime) {
-          timerStarted = true;
-          updateTimer();
-          timerInterval = setInterval(updateTimer, 1000);
+        // Get username from session storage
+        const username = sessionStorage.getItem("username") || "Guest";
+        document.getElementById("username").innerText = username;
+
+        if (!localStorage.getItem("startTime")) {
+          localStorage.setItem("startTime", Date.now());
         }
+        if (!localStorage.getItem("completedRounds")) {
+          localStorage.setItem("completedRounds", "0");
+        }
+        updateProgress();
+        startTimer();
       };
 
+      function startTimer() {
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+
       function updateTimer() {
-        const startTime = localStorage.getItem("startTime");
-        if (startTime) {
-          time = Math.floor((Date.now() - startTime) / 1000);
-          document.getElementById("time").innerText = time;
-        }
+        let startTime =
+          parseInt(localStorage.getItem("startTime")) || Date.now();
+        let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById("time").innerText = elapsedTime;
       }
 
       function openPopup(round) {
@@ -154,10 +169,10 @@
       function getRoundName(round) {
         const names = {
           1: "Letter Decryption",
-          2: "Code Debugging",
-          3: "Image Analysis",
-          4: "Advanced Encryption",
-          5: "Advent of Code Challenge",
+          2: "Audio-clip Challenge",
+          3: "Code Debugger",
+          4: "Image Decypher",
+          5: "Advent Challenge",
         };
         return names[round] || "Unknown Round";
       }
@@ -187,10 +202,33 @@
               ? "In Progress"
               : "Locked"
           }]</span>`;
+
           if (status !== "locked") {
             progressItem.setAttribute("onclick", `openPopup(${i})`);
           }
           progressContainer.appendChild(progressItem);
+        }
+      }
+
+      function markRoundCompleted(round) {
+        let completedRounds =
+          parseInt(localStorage.getItem("completedRounds")) || 0;
+        if (round > completedRounds) {
+          localStorage.setItem("completedRounds", round);
+          updateProgress();
+        }
+
+        if (round === 5) {
+          // Store total time
+          const totalTime = document.getElementById("time").innerText;
+          localStorage.setItem("totalTime", totalTime);
+
+          // Store username
+          const username = sessionStorage.getItem("username") || "Guest";
+          sessionStorage.setItem("finalUsername", username);
+
+          // Redirect to youwon.html with parameters
+          window.location.href = `youwon.html?username=${username}&time=${totalTime}`;
         }
       }
     </script>
