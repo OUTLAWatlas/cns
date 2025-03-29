@@ -86,6 +86,7 @@
         <h2>TRANSMISSION INTERCEPTED</h2>
         <p id="popup-text"></p>
         <div class="input-container" id="input-container">
+<<<<<<< HEAD
           <input
             type="text"
             id="ip-input"
@@ -98,6 +99,13 @@
         <button class="round-button" onclick="location.href='rounds.html'">
           Return to Home
         </button>
+=======
+          <input type="text" id="ip-input" class="input-field" placeholder="Enter decoded IP address" />
+          <p id="error-message" class="error-message"></p>
+          <button class="round-button" onclick="checkIP()">Submit</button>
+        </div>
+        <button class="round-button" onclick="location.href='rounds.html'">Return to Home</button>
+>>>>>>> 03318cff1087397891dd27686f315dac7b195b09
       </div>
     </div>
 
@@ -123,6 +131,19 @@
           setTimeout(typeEffect, 50);
         } else {
           inputContainer.style.display = "block";
+<<<<<<< HEAD
+=======
+        }
+      }
+
+      function checkIP() {
+        const userInput = document.getElementById("ip-input").value.trim();
+        const errorMessage = document.getElementById("error-message");
+        if (userInput === "192.168.0.250") {
+          window.location.href = "round2.html";
+        } else {
+          errorMessage.textContent = "Incorrect IP. Try again.";
+>>>>>>> 03318cff1087397891dd27686f315dac7b195b09
         }
       }
 

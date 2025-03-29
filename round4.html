@@ -62,6 +62,7 @@
   </head>
   <body>
     <div class="container">
+<<<<<<< HEAD
       <h1>ROUND 4: Image Decypher</h1>
 
       <div class="instructions">
@@ -92,6 +93,26 @@
       >
         RETURN TO HOME
       </button>
+=======
+        <h1>ROUND 4: Image Decypher</h1>
+        
+        <div class="instructions">
+            <p><strong>Hint:</strong> What You See May Not always Be What You See....</p>
+            <p><strong>Your tasks:</strong></p>
+            <ol>
+                <li>Identify the hidden meaning behind the image.</li>
+            </ol>
+        </div>
+        
+        <div class="image-container">
+            <img src="image decryption.jpg" alt="Image Decryption" width="100%">
+        </div>
+        
+        <h2>Submit Your Answer</h2>
+        <input type="text" id="puzzle-answer" placeholder="Enter the extracted sequence here">
+        <button class="submit-btn" id="submit-answer">SUBMIT</button>
+        <button class="input-btn" onclick="location.href = 'rounds.html';" id="return-home">RETURN TO HOME</button>
+>>>>>>> 03318cff1087397891dd27686f315dac7b195b09
     </div>
 
     <script>
@@ -101,6 +122,7 @@
           const answer = document.getElementById("puzzle-answer").value.trim();
           const correctAnswer = "Knowledge";
 
+<<<<<<< HEAD
           if (answer === correctAnswer) {
             alert(
               "Correct! You have successfully solved the Image Decryption challenge."
@@ -109,6 +131,14 @@
           } else {
             alert("Incorrect answer. Try again.");
           }
+=======
+            if (answer === correctAnswer) {
+                alert("Correct! You have successfully solved the Image Decryption challenge.");
+                window.location.href = 'round5.html'; // Redirect to next round
+            } else {
+                alert("Incorrect answer. Try again.");
+            }
+>>>>>>> 03318cff1087397891dd27686f315dac7b195b09
         });
     </script>
   </body>
