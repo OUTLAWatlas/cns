@@ -23,13 +23,6 @@
         font-size: 1.5rem;
         font-weight: bold;
       }
-      #username-display {
-        position: absolute;
-        top: 20px;
-        left: 30px;
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
       .container {
         text-align: center;
         max-width: 800px;
@@ -55,7 +48,7 @@
       }
       .locked {
         color: #888;
-        cursor: not-allowed;
+        cursor: default;
       }
       .current {
         color: #ffff00;
@@ -98,7 +91,6 @@
     </style>
   </head>
   <body>
-    <div id="username-display">User: <span id="username">Guest</span></div>
     <div id="timer">Time: <span id="time">0</span> sec</div>
     <div class="container">
       <h1>CODE N SEEK</h1>
@@ -112,9 +104,7 @@
       <span class="close-btn" onclick="closePopup()">✖</span>
       <p id="popup-text"></p>
       <button id="popup-btn" onclick="goToRound()">Start</button>
-      <button onclick="window.location.href='rounds.html'">
-        Return to Home
-      </button>
+      <button onclick="window.location.href='rounds.html'">Return to Home</button>
     </div>
 
     <script>
@@ -122,10 +112,6 @@
       let currentRoundUrl = "";
 
       window.onload = function () {
-        // Get username from session storage
-        const username = sessionStorage.getItem("username") || "Guest";
-        document.getElementById("username").innerText = username;
-
         if (!localStorage.getItem("startTime")) {
           localStorage.setItem("startTime", Date.now());
         }
@@ -142,19 +128,14 @@
       }
 
       function updateTimer() {
-        let startTime =
-          parseInt(localStorage.getItem("startTime")) || Date.now();
+        let startTime = parseInt(localStorage.getItem("startTime")) || Date.now();
         let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
         document.getElementById("time").innerText = elapsedTime;
       }
 
       function openPopup(round) {
         currentRoundUrl = round${round}.html;
-        document.getElementById(
-          "popup-text"
-        ).innerText = `You are about to start ${getRoundName(
-          round
-        )}. Are you ready?`;
+        document.getElementById("popup-text").innerText = You are about to start ${getRoundName(round)}. Are you ready?;
         document.getElementById("popup").style.display = "block";
       }
 
@@ -169,17 +150,16 @@
       function getRoundName(round) {
         const names = {
           1: "Letter Decryption",
-          2: "Audio-clip Challenge",
-          3: "Code Debugger",
-          4: "Image Decypher",
-          5: "Advent Challenge",
+          2: "Code Debugging",
+          3: "Image Analysis",
+          4: "Advanced Encryption",
+          5: "Advent of Code Challenge",
         };
         return names[round] || "Unknown Round";
       }
 
       function updateProgress() {
-        let completedRounds =
-          parseInt(localStorage.getItem("completedRounds")) || 0;
+        let completedRounds = parseInt(localStorage.getItem("completedRounds")) || 0;
         let progressContainer = document.getElementById("progress-container");
         progressContainer.innerHTML = "";
 
@@ -193,16 +173,14 @@
 
           let progressItem = document.createElement("div");
           progressItem.classList.add("progress-item", status);
-          progressItem.innerHTML = `Round ${i}: ${getRoundName(
-            i
-          )} <span class="${status}">[${
+          progressItem.innerHTML = `Round ${i}: ${getRoundName(i)} <span class="${status}">[${
             status === "completed"
               ? "COMPLETED"
               : status === "current"
               ? "In Progress"
               : "Locked"
           }]</span>`;
-
+          
           if (status !== "locked") {
             progressItem.setAttribute("onclick", openPopup(${i}));
           }
@@ -211,24 +189,10 @@
       }
 
       function markRoundCompleted(round) {
-        let completedRounds =
-          parseInt(localStorage.getItem("completedRounds")) || 0;
+        let completedRounds = parseInt(localStorage.getItem("completedRounds")) || 0;
         if (round > completedRounds) {
           localStorage.setItem("completedRounds", round);
           updateProgress();
-        }
-
-        if (round === 5) {
-          // Store total time
-          const totalTime = document.getElementById("time").innerText;
-          localStorage.setItem("totalTime", totalTime);
-
-          // Store username
-          const username = sessionStorage.getItem("username") || "Guest";
-          sessionStorage.setItem("finalUsername", username);
-
-          // Redirect to youwon.html with parameters
-          window.location.href = youwon.html?username=${username}&time=${totalTime};
         }
       }
     </script>
