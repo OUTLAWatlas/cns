@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Code and Seek - The End?</title>
+    <title>Code and Seek - Round 3</title>
     <style>
       body {
         font-family: "Courier New", monospace;
@@ -16,42 +16,155 @@
         align-items: center;
         height: 100vh;
         margin: 0;
-        overflow: hidden;
       }
       .container {
         background-color: #111;
         padding: 2rem;
         border-radius: 5px;
         box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-        max-width: 400px;
+        width: 90vw; /* Adjust width dynamically */
+        max-width: 800px; /* Limit max width */
       }
       h1 {
         font-size: 2rem;
         margin-bottom: 1rem;
       }
-      .message {
-        font-size: 1.2rem;
-        margin-bottom: 1.5rem;
+      .question-box {
+        background: black;
+        padding: 1rem;
+        border-radius: 5px;
+        border: 1px solid #00ff00;
+        text-align: left;
+        white-space: pre-wrap; /* Ensures proper indentation */
+        font-size: 14px;
+        width: 100%; /* Make it responsive */
+        max-width: 100%; /* Ensure it fits */
+        overflow-x: auto; /* Allow horizontal scrolling if needed */
+        word-wrap: break-word; /* Prevent long words from overflowing */
       }
-      #matrix-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
+      textarea {
         width: 100%;
-        height: 100%;
-        z-index: -1;
-        opacity: 0.15;
+        height: 200px;
+        margin-top: 10px;
+        background: black;
+        color: #00ff00;
+        border: 1px solid #00ff00;
+        font-family: "Courier New", monospace;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        resize: none;
+      }
+      .buttons {
+        margin-top: 15px;
+      }
+      .btn {
+        background-color: #00aa00;
+        color: black;
+        border: none;
+        padding: 0.7rem 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Courier New", monospace;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+      .btn:hover {
+        background-color: #00ff00;
+        box-shadow: 0 0 10px #00ff00;
       }
     </style>
   </head>
   <body>
-    <canvas id="matrix-canvas"></canvas>
-
     <div class="container">
-      <h1>CONGRATULATIONS, SEEKER</h1>
-      <p class="message">
-        The final cipher dissolves into the void. You have reached the end... or have you?
-      </p>
+      <h1>ROUND 3</h1>
+      <p>Fix the errors in the given Python script:</p>
+
+      <div class="question-box">
+        <pre>
+import random
+
+def guess_the_number():
+    number_to_guess = random.randint(1, 100)
+    attempts = 0
+    print("Welcome to the number guessing game!")
+
+    while attempts < 5:
+        user_guess = int(input("Guess a number between 1 and 100: "))
+        attempts += 1  # Corrected the increment statement
+
+        if user_guess == number_to_guess:  # Corrected the comparison operator
+            print("Congratulations! You've guessed the correct number.")
+            break
+        elif user_guess > number_to_guess:
+            print("Too high! Try again.")
+        else:
+            print("Too low! Try again.")
+    else:
+        print(f"Sorry, you've used all your attempts. The correct number was {number_to_guess}.")
+
+guess_the_number()
+        </pre>
+      </div>
+
+      <p>Enter the corrected code below:</p>
+      <textarea
+        id="user-code"
+        placeholder="Type or paste your corrected code here..."
+      ></textarea>
+
+      <div class="buttons">
+        <button class="btn" onclick="copyCorrectCode()">
+          Copy Correct Code
+        </button>
+        <button class="btn" onclick="checkAnswer()">Submit</button>
+      </div>
     </div>
+
+    <script>
+      // Corrected Python answer
+      const correctAnswer = `import random
+
+def guess_the_number():
+    number_to_guess = random.randint(1, 100)
+    attempts = 0
+    print("Welcome to the number guessing game!")
+
+    while attempts < 5:
+        user_guess = int(input("Guess a number between 1 and 100: "))
+        attempts += 1  # Corrected the increment statement
+
+        if user_guess == number_to_guess:  # Corrected the comparison operator
+            print("Congratulations! You've guessed the correct number.")
+            break
+        elif user_guess > number_to_guess:
+            print("Too high! Try again.")
+        else:
+            print("Too low! Try again.")
+    else:
+        print(f"Sorry, you've used all your attempts. The correct number was {number_to_guess}.")
+
+guess_the_number()`;
+
+      // Function to copy correct code to clipboard
+      function copyCorrectCode() {
+        navigator.clipboard.writeText(correctAnswer).then(() => {
+          alert("Corrected code copied to clipboard!");
+        });
+      }
+
+      // Function to check if user entered the correct code
+      function checkAnswer() {
+        const userInput = document.getElementById("user-code").value.trim();
+
+        if (userInput === correctAnswer.trim()) {
+          alert("Correct! Moving to Round 4.");
+          window.location.href = "round4.html"; // Redirect to next round
+        } else {
+          alert("Incorrect! Check your syntax and try again.");
+        }
+      }
+    </script>
   </body>
 </html>
