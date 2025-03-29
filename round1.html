@@ -131,19 +131,6 @@
           setTimeout(typeEffect, 50);
         } else {
           inputContainer.style.display = "block";
-<<<<<<< HEAD
-=======
-        }
-      }
-
-      function checkIP() {
-        const userInput = document.getElementById("ip-input").value.trim();
-        const errorMessage = document.getElementById("error-message");
-        if (userInput === "192.168.0.250") {
-          window.location.href = "round2.html";
-        } else {
-          errorMessage.textContent = "Incorrect IP. Try again.";
->>>>>>> 03318cff1087397891dd27686f315dac7b195b09
         }
       }
 
@@ -159,7 +146,7 @@
       }
 
       function completeRound(roundNumber) {
-        localStorage.setItem(`round${roundNumber}_completed`, "true");
+        localStorage.setItem(round${roundNumber}_completed, "true");
       }
 
       typeEffect();
